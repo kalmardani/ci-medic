@@ -1,6 +1,6 @@
 {
   "name": "ci-medic",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Triage agent for failed CI runs. Reduces the log, gathers evidence from the repository, asks a model for a root cause with verified quotes, and proves a proposed patch applies.",
   "type": "module",
   "bin": {

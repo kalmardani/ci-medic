@@ -326,7 +326,7 @@ What stays in code and what goes to the model.
 node --test
 ```
 
-85 tests, no network, no secrets. They build the sample repository from
+87 tests, no network, no secrets. They build the sample repository from
 `examples/make-sample-repo.js` in a temp dir with two commits (the good version and the
 regression), start a local fake OAuth server and local fake chat servers on 127.0.0.1, and use
 the `fake` adapter or a fake process runner for the vendor CLIs. The memory tests skip on a Node

@@ -1,10 +1,8 @@
 // Subscription adapter through the official `claude` CLI. The CLI runs with no
 // tools, no MCP servers, no saved session, in an empty temp directory, and the
 // prompt goes in on stdin. ci-medic never touches the CLI's stored credentials.
-import fs from 'node:fs';
-import os from 'node:os';
-import path from 'node:path';
 import { defaultRunner } from '../proc.js';
+import { makeWorkDir, removeWorkDir } from './workdir.js';
 import { claudeBin, INSTALL_HINT } from '../auth/subscription.js';
 
 const TRANSIENT = /overloaded|rate.?limit|\b429\b|\b5\d\d\b|timed? ?out|ECONNRESET|network/i;
@@ -22,7 +20,7 @@ export function createClaudeCliAdapter({ model, timeoutMs, runner = defaultRunne
       delete childEnv.GITHUB_TOKEN;
       let lastErr;
       for (let attempt = 0; attempt < 3; attempt++) {
-        const cwd = fs.mkdtempSync(path.join(os.tmpdir(), 'ci-medic-claude-'));
+        const cwd = makeWorkDir();
         let r;
         try {
           r = await runner.run(claudeBin(env), args, { cwd, input: user, timeoutMs, env: childEnv });
@@ -30,7 +28,7 @@ export function createClaudeCliAdapter({ model, timeoutMs, runner = defaultRunne
           if (err.code === 'ENOENT' || err.code === 'EINVAL') throw new Error(`claude CLI could not be started. ${INSTALL_HINT.claude}`);
           throw err;
         } finally {
-          fs.rmSync(cwd, { recursive: true, force: true });
+          removeWorkDir(cwd);
         }
         let data = null;
         try {

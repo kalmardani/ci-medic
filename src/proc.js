@@ -9,7 +9,7 @@ const DEFAULT_CAP = 4 * 1024 * 1024;
  * Run a command and collect its output.
  * @param {string} cmd executable name or path
  * @param {string[]} args argument array, never joined into a shell string
- * @param {{cwd?: string, env?: object, input?: string, timeoutMs?: number, maxBytes?: number}} [opts]
+ * @param {{cwd?: string, env?: object, input?: string, timeoutMs?: number, maxBytes?: number, spawnImpl?: Function}} [opts]
  * @returns {Promise<{code: number|null, signal: string|null, stdout: string, stderr: string, timedOut: boolean, truncated: boolean, ms: number}>}
  */
 export function run(cmd, args, opts = {}) {
@@ -19,7 +19,7 @@ export function run(cmd, args, opts = {}) {
   return new Promise((resolve, reject) => {
     let child;
     try {
-      child = spawn(cmd, args, {
+      child = (opts.spawnImpl ?? spawn)(cmd, args, {
         cwd: opts.cwd,
         env: opts.env ?? process.env,
         shell: false,

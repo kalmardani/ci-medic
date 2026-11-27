@@ -36,4 +36,4 @@ The reduced log, matched file excerpts and recent diffs of those files are sent 
 provider. Choose a provider whose data handling fits your code.
 
 ci-medic uses a vendor subscription only by starting that vendor's official CLI. It never reads
-the credentials those CLIs store.
+the credentials those CLIs store. Both CLIs run from an empty temporary folder, so the project instruction files of the folder you work in (CLAUDE.md, AGENTS.md and similar) are not sent to the model, while the user level settings of each CLI still load.

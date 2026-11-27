@@ -121,7 +121,7 @@ function io(overrides = {}) {
 test('CLI help, version, usage and config errors', async () => {
   let t = io();
   assert.equal(await main(['--version'], t.o), EXIT.ok);
-  assert.match(t.out.join(''), /^0\.1\.0\n$/);
+  assert.match(t.out.join(''), /^0\.1\.1\n$/);
   t = io();
   assert.equal(await main(['--help'], t.o), EXIT.ok);
   for (const cmd of ['reduce', 'apply --patch', 'memory list', 'auth login [claude|chatgpt]', 'auth status', 'mcp']) assert.ok(t.out.join('').includes(cmd), cmd);

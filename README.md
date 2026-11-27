@@ -61,6 +61,8 @@ already signed in, and if not starts that CLI's own interactive sign in in your 
 ci-medic never reads or reuses the tokens those CLIs store and never calls a vendor API with
 them; it only starts the official CLI as a subprocess.
 
+Both CLIs run from an empty temporary folder, so the project instruction files of the folder you work in (CLAUDE.md, AGENTS.md and similar) are not sent to the model, while the user level settings of each CLI still load.
+
 `ci-medic auth status` shows every connection type and whether it is ready, without printing any
 secret.
 
