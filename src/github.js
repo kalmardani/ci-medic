@@ -4,6 +4,13 @@
 import { fetchWithRetry, readCapped, HttpError } from './http.js';
 
 const MAX_TOTAL = 20 * 1024 * 1024;
+
+export class GitHubError extends Error {
+  constructor(message) {
+    super(message);
+    this.name = 'GitHubError';
+  }
+}
 const NAME = /^[A-Za-z0-9_.-]{1,100}$/;
 
 /**
@@ -14,9 +21,9 @@ export function parseRunRef(ref) {
   const s = String(ref ?? '').trim();
   let m = /^https?:\/\/[^/]+\/([^/]+)\/([^/]+)\/actions\/runs\/(\d+)(?:\/attempts\/(\d+))?(?:\/job\/(\d+))?\/?(?:[?#].*)?$/.exec(s);
   if (!m) m = /^([^/\s]+)\/([^/\s:]+):(\d+)$/.exec(s);
-  if (!m) throw new Error(`cannot read a GitHub Actions run from "${s.slice(0, 120)}". Use https://github.com/OWNER/REPO/actions/runs/ID or OWNER/REPO:ID`);
+  if (!m) throw new GitHubError(`cannot read a GitHub Actions run from "${s.slice(0, 120)}". Use https://github.com/OWNER/REPO/actions/runs/ID or OWNER/REPO:ID`);
   const [, owner, repo, runId, attempt, jobId] = m;
-  if (!NAME.test(owner) || !NAME.test(repo)) throw new Error('owner or repository name has unexpected characters');
+  if (!NAME.test(owner) || !NAME.test(repo)) throw new GitHubError('owner or repository name has unexpected characters');
   return { owner, repo, runId, attempt: attempt ? Number(attempt) : null, jobId: jobId ?? null };
 }
 
@@ -27,7 +34,7 @@ export function parseRunRef(ref) {
 export async function fetchRunLogs(ref, opts = {}) {
   const apiBase = (opts.apiBase ?? 'https://api.github.com').replace(/\/+$/, '');
   if (!/^https:\/\//.test(apiBase) && !/^http:\/\/(?:127\.0\.0\.1|localhost)(?::\d+)?$/.test(apiBase)) {
-    throw new Error('GITHUB_API_URL must be an https URL');
+    throw new GitHubError('GITHUB_API_URL must be an https URL');
   }
   const headers = {
     accept: 'application/vnd.github+json',
@@ -55,7 +62,7 @@ export async function fetchRunLogs(ref, opts = {}) {
   const failed = jobs.filter((j) => j.conclusion === 'failure' || j.conclusion === 'timed_out');
   const chosen = failed.length ? failed : ref.jobId ? jobs : [];
   if (chosen.length === 0) {
-    throw new Error(`run ${ref.runId} attempt ${attempt} has no failed job (run conclusion: ${run.conclusion ?? 'unknown'})`);
+    throw new GitHubError(`run ${ref.runId} attempt ${attempt} has no failed job (run conclusion: ${run.conclusion ?? 'unknown'})`);
   }
 
   const parts = [];
@@ -66,7 +73,7 @@ export async function fetchRunLogs(ref, opts = {}) {
     let body;
     if (res.status >= 300 && res.status < 400) {
       const location = res.headers.get('location');
-      if (!location || !/^https:\/\//.test(location)) throw new Error('GitHub returned a log redirect without an https location');
+      if (!location || !/^https:\/\//.test(location)) throw new GitHubError('GitHub returned a log redirect without an https location');
       // The signed URL carries its own authorisation. The token is not forwarded.
       const logRes = await fetchWithRetry(location, { headers: { 'user-agent': 'ci-medic' } }, http);
       if (!logRes.ok) throw new HttpError(`downloading the log of job ${job.id} failed with HTTP ${logRes.status}`, logRes.status);

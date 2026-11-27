@@ -407,7 +407,7 @@ export async function main(argv, ioOverrides = {}) {
       io.stderr(`ci-medic: ${err.message}\n`);
       return EXIT.usage;
     }
-    if (err instanceof InputError || err.name === 'HttpError' || err.name === 'GitError' || err.name === 'OAuthError' || /GitHub|run /.test(err.message)) {
+    if (['InputError', 'HttpError', 'GitError', 'OAuthError', 'GitHubError'].includes(err.name)) {
       io.stderr(`ci-medic: ${termText(err.message)}\n`);
       return EXIT.input;
     }
