@@ -1,0 +1,81 @@
+2026-11-26T15:41:02.1604560Z ##[group]Runner Image
+2026-11-26T15:41:02.1974560Z Image: ubuntu-24.04
+2026-11-26T15:41:02.2344560Z Version: 20261123.1.0
+2026-11-26T15:41:02.2714560Z ##[endgroup]
+2026-11-26T15:41:02.3084560Z ##[group]Run actions/checkout@v4
+2026-11-26T15:41:02.3454560Z with:
+2026-11-26T15:41:02.3824560Z   repository: example-org/sample-shop
+2026-11-26T15:41:02.4194560Z   fetch-depth: 1
+2026-11-26T15:41:02.4564560Z ##[endgroup]
+2026-11-26T15:41:02.4934560Z Syncing repository: example-org/sample-shop
+2026-11-26T15:41:02.5304560Z [command]/usr/bin/git version
+2026-11-26T15:41:02.5674560Z git version 2.51.0
+2026-11-26T15:41:02.6044560Z Initialized empty Git repository in /home/runner/work/sample-shop/sample-shop/.git/
+2026-11-26T15:41:02.6414560Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +6884835c1f0d2b7a9e3c4d5f6a7b8c9d0e1f2a3b:refs/remotes/origin/main
+2026-11-26T15:41:02.6784560Z From https://github.com/example-org/sample-shop
+2026-11-26T15:41:02.7154560Z  * [new ref]         6884835c1f0d2b7a9e3c4d5f6a7b8c9d0e1f2a3b -> origin/main
+2026-11-26T15:41:02.7524560Z HEAD is now at 6884835 refactor: apply the discount per line
+2026-11-26T15:41:02.7894560Z ##[group]Run actions/setup-node@v4
+2026-11-26T15:41:02.8264560Z with:
+2026-11-26T15:41:02.8634560Z   node-version: 24
+2026-11-26T15:41:02.9004560Z ##[endgroup]
+2026-11-26T15:41:02.9374560Z Found in cache @ /opt/hostedtoolcache/node/24.11.1/x64
+2026-11-26T15:41:02.9744560Z ##[group]Environment details
+2026-11-26T15:41:03.0114560Z node: v24.11.1
+2026-11-26T15:41:03.0484560Z npm: 11.6.2
+2026-11-26T15:41:03.0854560Z yarn: 1.22.22
+2026-11-26T15:41:03.1224560Z ##[endgroup]
+2026-11-26T15:41:03.1594560Z ##[group]Run npm test
+2026-11-26T15:41:03.1964560Z [36;1mnpm test[0m
+2026-11-26T15:41:03.2334560Z shell: /usr/bin/bash -e {0}
+2026-11-26T15:41:03.2704560Z env:
+2026-11-26T15:41:03.3074560Z   FORCE_COLOR: 1
+2026-11-26T15:41:03.3444560Z ##[endgroup]
+2026-11-26T15:41:03.3814560Z 
+2026-11-26T15:41:03.4184560Z > sample-shop@ test
+2026-11-26T15:41:03.4554560Z > node --test spec/cart.spec.js
+2026-11-26T15:41:03.4924560Z 
+2026-11-26T15:41:03.4954560Z [32m✔ line total multiplies price by quantity [90m(1.558333ms)[39m[39m
+2026-11-26T15:41:03.4984560Z [32m✔ cart total without discount [90m(30.456557ms)[39m[39m
+2026-11-26T15:41:03.5014560Z [31m✖ cart total rounds the discount once on the subtotal [90m(24.934296ms)[39m[39m
+2026-11-26T15:41:03.5044560Z [34mℹ tests 3[39m
+2026-11-26T15:41:03.5074560Z [34mℹ suites 0[39m
+2026-11-26T15:41:03.5104560Z [34mℹ pass 2[39m
+2026-11-26T15:41:03.5134560Z [34mℹ fail 1[39m
+2026-11-26T15:41:03.5164560Z [34mℹ cancelled 0[39m
+2026-11-26T15:41:03.5194560Z [34mℹ skipped 0[39m
+2026-11-26T15:41:03.5224560Z [34mℹ todo 0[39m
+2026-11-26T15:41:03.5254560Z [34mℹ duration_ms 391.438223[39m
+2026-11-26T15:41:03.5284560Z 
+2026-11-26T15:41:03.5314560Z [31m✖ failing tests:[39m
+2026-11-26T15:41:03.5344560Z 
+2026-11-26T15:41:03.5374560Z test at spec/cart.spec.js:13:1
+2026-11-26T15:41:03.5404560Z [31m✖ cart total rounds the discount once on the subtotal [90m(24.934296ms)[39m[39m
+2026-11-26T15:41:03.5434560Z   AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:
+2026-11-26T15:41:03.5464560Z   
+2026-11-26T15:41:03.5494560Z   897 !== 899
+2026-11-26T15:41:03.5524560Z   
+2026-11-26T15:41:03.5554560Z       at TestContext.<anonymous> [90m(file:///home/runner/work/sample-shop/sample-shop/[39mspec/cart.spec.js:19:10[90m)[39m
+2026-11-26T15:41:03.5584560Z   [90m    at Test.runInAsyncScope (node:async_hooks:227:14)[39m
+2026-11-26T15:41:03.5614560Z   [90m    at Test.run (node:internal/test_runner/test:1402:25)[39m
+2026-11-26T15:41:03.5644560Z   [90m    at Test.processPendingSubtests (node:internal/test_runner/test:974:18)[39m
+2026-11-26T15:41:03.5674560Z   [90m    at Test.postRun (node:internal/test_runner/test:1542:19)[39m
+2026-11-26T15:41:03.5704560Z   [90m    at Test.run (node:internal/test_runner/test:1467:12)[39m
+2026-11-26T15:41:03.5734560Z   [90m    at async Test.processPendingSubtests (node:internal/test_runner/test:974:7)[39m {
+2026-11-26T15:41:03.5764560Z     generatedMessage: [33mtrue[39m,
+2026-11-26T15:41:03.5794560Z     code: [32m'ERR_ASSERTION'[39m,
+2026-11-26T15:41:03.5824560Z     actual: [33m897[39m,
+2026-11-26T15:41:03.5854560Z     expected: [33m899[39m,
+2026-11-26T15:41:03.5884560Z     operator: [32m'strictEqual'[39m,
+2026-11-26T15:41:03.5914560Z     diff: [32m'simple'[39m
+2026-11-26T15:41:03.5944560Z   }
+2026-11-26T15:41:03.6144560Z npm error Lifecycle script `test` failed with error:
+2026-11-26T15:41:03.6344560Z npm error code 1
+2026-11-26T15:41:03.6544560Z npm error path /home/runner/work/sample-shop/sample-shop
+2026-11-26T15:41:03.6744560Z npm error workspace sample-shop@
+2026-11-26T15:41:03.6944560Z npm error location /home/runner/work/sample-shop/sample-shop
+2026-11-26T15:41:03.7144560Z npm error command failed
+2026-11-26T15:41:03.7344560Z npm error command sh -c node --test spec/cart.spec.js
+2026-11-26T15:41:03.7544560Z ##[error]Process completed with exit code 1.
+2026-11-26T15:41:03.7744560Z Post job cleanup.
+2026-11-26T15:41:03.7944560Z Cleaning up orphan processes

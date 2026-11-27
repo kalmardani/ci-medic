@@ -1,0 +1,32 @@
+2026-11-24T17:03:55.1310000Z ##[group]Run npm test
+2026-11-24T17:03:55.1720000Z [36;1mnpm test[0m
+2026-11-24T17:03:55.2130000Z shell: /usr/bin/bash -e {0}
+2026-11-24T17:03:55.2540000Z env:
+2026-11-24T17:03:55.2950000Z   DATABASE_URL: postgres://app:app@127.0.0.1:5432/app
+2026-11-24T17:03:55.3360000Z ##[endgroup]
+2026-11-24T17:03:55.3770000Z 
+2026-11-24T17:03:55.4180000Z > orders-service@1.4.0 test
+2026-11-24T17:03:55.4590000Z > jest --ci
+2026-11-24T17:03:55.5000000Z 
+2026-11-24T17:03:55.5410000Z [0m[7m[1m[32m PASS [39m[22m[27m[0m test/[1mprice.test.js[22m
+2026-11-24T17:03:55.5820000Z [0m[7m[1m[31m FAIL [39m[22m[27m[0m test/[1mapi.test.js[22m ([0;1;31m6.214 s[0m)
+2026-11-24T17:03:55.6230000Z   orders API
+2026-11-24T17:03:55.6640000Z     [32m✓[39m lists orders (41 ms)
+2026-11-24T17:03:55.7050000Z     [31m✕[39m creates an order (5003 ms)
+2026-11-24T17:03:55.7460000Z 
+2026-11-24T17:03:55.7870000Z [1m[31m  [1m● [22m[1morders API › creates an order[39m[22m
+2026-11-24T17:03:55.8280000Z 
+2026-11-24T17:03:55.8690000Z     connect ECONNREFUSED 127.0.0.1:5432
+2026-11-24T17:03:55.9100000Z 
+2026-11-24T17:03:55.9510000Z     [2mat TCPConnectWrap.afterConnect [as oncomplete] ([22mnode:net[2m:1611:16)[22m
+2026-11-24T17:03:55.9920000Z     [2mat Pool.connect ([22mnode_modules/pg-pool/index.js[2m:45:11)[22m
+2026-11-24T17:03:56.0330000Z     [2mat Object.<anonymous> ([22m[0m[36mtest/api.test.js[39m[0m[2m:28:18)[22m
+2026-11-24T17:03:56.0740000Z 
+2026-11-24T17:03:56.1150000Z [1mTest Suites: [22m[1m[31m1 failed[39m[22m, [1m[32m1 passed[39m[22m, 2 total
+2026-11-24T17:03:56.1560000Z [1mTests:       [22m[1m[31m1 failed[39m[22m, [1m[32m4 passed[39m[22m, 5 total
+2026-11-24T17:03:56.1970000Z [1mSnapshots:   [22m0 total
+2026-11-24T17:03:56.2380000Z Time:        7.032 s
+2026-11-24T17:03:56.2790000Z Ran all test suites.
+2026-11-24T17:03:56.3200000Z npm error Lifecycle script `test` failed with error:
+2026-11-24T17:03:56.3610000Z npm error code 1
+2026-11-24T17:03:56.4020000Z ##[error]Process completed with exit code 1.
